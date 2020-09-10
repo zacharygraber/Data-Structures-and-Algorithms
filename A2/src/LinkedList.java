@@ -53,15 +53,22 @@ public abstract class LinkedList<E> implements StackI<E>, QueueI<E>, DequeueI<E>
 
     // Stack. Implement by delegating to the common methods
     public LinkedList<E> push (E elem) {
-        return null; // TODO
+        try {
+            return this.insertAt(0, elem);
+        }
+        // This should never be reached, but it won't compile without this, since this method does not throw EmptyListE
+        catch (EmptyListE emptyListE) {
+            emptyListE.printStackTrace();
+            return null;
+        }
     }
 
     public LinkedList<E> pop () throws EmptyListE {
-        return null; // TODO
+        return this.removeAt(0);
     }
 
     public E top () throws EmptyListE {
-        return null; // TODO
+        return this.getAt(0); // Calling this.getAt(0) is the same as just saying this.front
     };
 
     // Linked List
@@ -71,38 +78,59 @@ public abstract class LinkedList<E> implements StackI<E>, QueueI<E>, DequeueI<E>
 
     // Queue. Implement by delegating to the common methods.
     public LinkedList<E> enqueue (E elem) {
-        return null; // TODO
+        // For a queue, we'll enqueue at the back of the LinkedList, and dequeue at the front.
+        // We once again run into issues caused by a lack of "throws EmptyListE" in the definition of this method
+        try {
+            return this.insertAt(this.length(), elem);
+        } catch (EmptyListE emptyListE) {
+            emptyListE.printStackTrace();
+            return null;
+        }
     }
 
     public LinkedList<E> dequeue () throws EmptyListE {
-        return null; // TODO
+        // Dequeue from the front of the LinkedList
+        return this.removeAt(0);
     }
 
     public E front () throws EmptyListE {
-        return null; // TODO
+        // Since we are dequeueing from the front of the LinkedList, we get from index 0
+        return this.getAt(0);
     }
 
     // Dequeue. Implement by delegating to the common methods.
     public LinkedList<E> enqueueBack (E elem) {
-        return null; // TODO
+        try {
+            return this.insertAt(this.length(), elem);
+        } catch (EmptyListE emptyListE) {
+            emptyListE.printStackTrace();
+            return null;
+        }
     }
 
     public LinkedList<E> dequeueFront () throws EmptyListE {
-        return null; // TODO
+        return this.removeAt(0);
     }
 
     public LinkedList<E> enqueueFront (E elem) {
-        return null; // TODO
+        try {
+            return this.insertAt(0, elem);
+        } catch (EmptyListE emptyListE) {
+            emptyListE.printStackTrace();
+            return null;
+        }
     }
 
     public LinkedList<E> dequeueBack () throws EmptyListE {
-        return null; // TODO
+        // Remove the element at the last index
+        return this.removeAt(this.length() - 1);
     }
 
     // front shared with queue
 
     public E back () throws EmptyListE {
-        return null; // TODO
+        // Get the element at the last index
+        return this.getAt(this.length() - 1);
     }
 }
 
@@ -111,23 +139,32 @@ public abstract class LinkedList<E> implements StackI<E>, QueueI<E>, DequeueI<E>
 class EmptyList<E> extends LinkedList<E> {
 
     protected LinkedList<E> getRest() throws EmptyListE {
-        return null; // TODO
+        throw new EmptyListE();
     }
 
     protected int length() {
-        return 0; // TODO
+        return 0;
     }
 
     public LinkedList<E> insertAt(int i, E elem) throws EmptyListE {
-        return null; // TODO
+        // Edge case where negative index is given
+        if (i < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        else if (i > 0) {
+            throw new EmptyListE();
+        }
+        else {
+            return new NonEmptyList<>(elem, this);
+        }
     }
 
     public LinkedList<E> removeAt(int i) throws EmptyListE {
-        return null; // TODO
+        throw new EmptyListE();
     }
 
     public E getAt(int i) throws EmptyListE {
-        return null; // TODO
+        throw new EmptyListE();
     }
 
     public String toString () { return "#"; }
@@ -145,23 +182,53 @@ class NonEmptyList<E> extends LinkedList<E> {
     }
 
     protected LinkedList<E> getRest() {
-        return null; // TODO
+        return this.rest;
     }
 
     protected int length() {
-        return 0; // TODO
+        return rest.length() + 1;
     }
 
     public LinkedList<E> insertAt(int i, E elem) throws EmptyListE {
-        return null; // TODO
+        // Handle the edge case where a negative index is given
+        if (i < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        if (i > 0) {
+            return new NonEmptyList<>(this.front, rest.insertAt(i - 1, elem));
+        }
+        else {
+            return new NonEmptyList<>(elem, this);
+        }
     }
 
     public LinkedList<E> removeAt(int i) throws EmptyListE {
-        return null; // TODO
+        // Edge case
+        if (i < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        if (i > 0) {
+            return new NonEmptyList<>(this.front, rest.removeAt(i - 1));
+        }
+        else {
+            return this.rest;
+        }
     }
 
     public E getAt(int i) throws EmptyListE {
-        return null; // TODO
+        // Edge case
+        if (i < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        if (i > 0) {
+            return rest.getAt(i - 1);
+        }
+        else {
+            return front;
+        }
     }
 
     public String toString () {
