@@ -2,58 +2,99 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d901cd8-f4e2-43a5-92e7-d64c854febb2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../L2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L2/D1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/D1.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/A.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/EmptyQueueE.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/production/D1/EmptyQueueE.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/EmptyS.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/production/D1/EmptyS.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/EmptyStackE.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/production/D1/EmptyStackE.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/Mutable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/NonEmptyS.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/production/D1/NonEmptyS.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/Queue.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/production/D1/Queue.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/Stack.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/production/D1/Stack.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L2/out/test/D1/QueueTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/test/D1/QueueTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L2/out/test/D1/StackTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/test/D1/StackTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L2/src/Queue.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/src/Queue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L2/test/QueueTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/test/QueueTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L3/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../L3/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L3/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../L3/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L3/L3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../L3/L3.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L3/src/Counter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../L3/src/Counter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../L3/test/CounterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../L3/test/CounterTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/org_junit_jupiter_junit_jupiter_5_4_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../L2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../L2/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/junit_junit_5_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/L3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/L3.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Counter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Counter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/CounterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/CounterTest.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1hMjK3JtM42PHMVpjvx1gc86ElY" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../A3" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
+  <component name="RunManager" selected="JUnit.CounterTest.incrementTimeTest">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CounterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="L3" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="CounterTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CounterTest.count1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="L3" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="CounterTest" />
+      <option name="METHOD_NAME" value="count1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CounterTest.incrementTimeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="L3" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="CounterTest" />
+      <option name="METHOD_NAME" value="incrementTimeTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
       <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
+        <item itemvalue="JUnit.CounterTest.incrementTimeTest" />
+        <item itemvalue="JUnit.CounterTest.count1" />
+        <item itemvalue="JUnit.CounterTest" />
       </list>
-    </option>
+    </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -65,11 +106,12 @@
       <option name="presentableId" value="Default" />
       <updated>1599827787811</updated>
       <workItem from="1599827788950" duration="65000" />
+      <workItem from="1599858046396" duration="5066000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -81,5 +123,40 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1032" y="524" key="#Notifications" timestamp="1599858058790">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1032" y="524" key="#Notifications/0.0.2560.1400/-2560.316.2048.1112@0.0.2560.1400" timestamp="1599858058790" />
+    <state x="986" y="441" key="FileChooserDialogImpl" timestamp="1599860040079">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="986" y="441" key="FileChooserDialogImpl/0.0.2560.1400/-2560.316.2048.1112@0.0.2560.1400" timestamp="1599860040079" />
+    <state width="2517" height="401" key="GridCell.Tab.0.bottom" timestamp="1599863081051">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1400/-2560.316.2048.1112@0.0.2560.1400" timestamp="1599863081051" />
+    <state width="2517" height="401" key="GridCell.Tab.0.center" timestamp="1599863081051">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="401" key="GridCell.Tab.0.center/0.0.2560.1400/-2560.316.2048.1112@0.0.2560.1400" timestamp="1599863081051" />
+    <state width="2517" height="401" key="GridCell.Tab.0.left" timestamp="1599863081050">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="401" key="GridCell.Tab.0.left/0.0.2560.1400/-2560.316.2048.1112@0.0.2560.1400" timestamp="1599863081050" />
+    <state width="2517" height="401" key="GridCell.Tab.0.right" timestamp="1599863081051">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="401" key="GridCell.Tab.0.right/0.0.2560.1400/-2560.316.2048.1112@0.0.2560.1400" timestamp="1599863081051" />
+    <state x="760" y="274" key="SettingsEditor" timestamp="1599859424035">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="760" y="274" key="SettingsEditor/0.0.2560.1400/-2560.316.2048.1112@0.0.2560.1400" timestamp="1599859424035" />
+    <state x="984" y="591" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1599859416661">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="984" y="591" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.2560.1400/-2560.316.2048.1112@0.0.2560.1400" timestamp="1599859416661" />
   </component>
 </project>
