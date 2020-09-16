@@ -1,5 +1,6 @@
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 class NoSuchElementE extends Exception {}
@@ -39,7 +40,9 @@ public abstract class DequeueArray<E> {
      *  Creates a new empty array of elements of the given size
      */
     public void clear(int capacity) {
-        // TODO
+        this.elements = (Optional<E>[]) Array.newInstance(Optional.class, capacity);
+        Arrays.fill(elements, Optional.empty());
+        this.capacity = capacity;
     }
 
     public int size () { return size; }
@@ -48,42 +51,62 @@ public abstract class DequeueArray<E> {
      *  Adds an elements to the front of the dequeue
      */
     public void addFirst(E elem) {
-        // TODO
+        // If the dequeue is full, then we need to resize
+        if (this.size == this.capacity) {
+            this.grow();
+        }
+        this.elements[this.front] = Optional.of(elem);
+        this.front = Math.floorMod((this.front - 1), this.capacity);
+        this.size += 1;
     }
 
     /**
      *  Adds an elements to the back of the dequeue
      */
     public void addLast(E elem) {
-        // TODO
+        // If the dequeue is full, then we need to resize
+        if (this.size == this.capacity) {
+            this.grow();
+        }
+        this.elements[this.back] = Optional.of(elem);
+        this.back = (this.back + 1) % this.capacity;
+        this.size += 1;
     }
 
     /**
      *  Returns the element at the front (if there is one)
      */
     public E getFirst() throws NoSuchElementE {
-        return null; // TODO
+        return this.elements[(this.front + 1) % this.capacity].orElseThrow(NoSuchElementE::new);
     }
 
     /**
      *  Returns the element at the back of the dequeue (if there is one)
      */
     public E getLast() throws NoSuchElementE {
-        return null; // TODO
+        return this.elements[Math.floorMod((this.back - 1), this.capacity)].orElseThrow(NoSuchElementE::new);
     }
 
     /**
      *  Removes and returns the element at the front of the dequeue (if there is one)
      */
     public E removeFirst() throws NoSuchElementE {
-        return null; // TODO
+        E firstElement = this.elements[(this.front + 1) % this.capacity].orElseThrow(NoSuchElementE::new);
+        this.elements[(this.front + 1) % this.capacity] = Optional.empty();
+        this.front = (this.front + 1) % this.capacity;
+        this.size -= 1;
+        return firstElement;
     }
 
     /**
      * Removes and returns the element at the back of the dequeue (if there is one)
      */
     public E removeLast() throws NoSuchElementE {
-        return null; // TODO
+        E firstElement = this.elements[Math.floorMod((this.back - 1), this.capacity)].orElseThrow(NoSuchElementE::new);
+        this.elements[Math.floorMod((this.back - 1), this.capacity)] = Optional.empty();
+        this.back = Math.floorMod((this.back - 1), this.capacity);
+        this.size -= 1;
+        return firstElement;
     }
 
     /**
@@ -117,7 +140,26 @@ class DequeueArrayDouble<E> extends DequeueArray<E> {
      * (i.e., by doubling the capacity)
      */
     void grow() {
-        // TODO
+        Optional<E>[] newElemsArr = new Optional[this.capacity * 2];
+        for (int i = 0; i < this.capacity; i++) {
+            try {
+                // Go through and build the new array IN ORDER
+                newElemsArr[i] = Optional.of(this.removeFirst());
+            } catch (NoSuchElementE e) { System.out.println("SOMETHING WENT VERY VERY WRONG! This should never happen."); }
+        }
+        // Populate the rest with empty Optionals
+        for (int i = this.capacity; i < newElemsArr.length; i++) {
+            newElemsArr[i] = Optional.empty();
+        }
+
+        /* The new back should be after all the original elements are inserted.
+           Luckily, we know that elements end at this.capacity - 1, so the new
+           back will be at the index of the old capacity!                       */
+        this.back = this.capacity;
+        this.size = this.capacity; // Removing elements borks up the size, so we reset it.
+        this.capacity *= 2;
+        this.front = this.capacity - 1;
+        this.elements = newElemsArr;
     }
 }
 
@@ -134,7 +176,26 @@ class DequeueArrayOneAndHalf<E> extends DequeueArray<E> {
      * More precisely Math.round(1.5f * capacity)
      */
     void grow() {
-        // TODO
+        Optional<E>[] newElemsArr = new Optional[Math.round(1.5f * this.capacity)];
+        for (int i = 0; i < this.capacity; i++) {
+            try {
+                // Go through and build the new array IN ORDER
+                newElemsArr[i] = Optional.of(this.removeFirst());
+            } catch (NoSuchElementE e) { System.out.println("SOMETHING WENT VERY VERY WRONG! This should never happen."); }
+        }
+        // Populate the rest with empty Optionals
+        for (int i = this.capacity; i < newElemsArr.length; i++) {
+            newElemsArr[i] = Optional.empty();
+        }
+
+        /* The new back should be after all the original elements are inserted.
+           Luckily, we know that elements end at this.capacity - 1, so the new
+           back will be at the index of the old capacity!                       */
+        this.back = this.capacity;
+        this.size = this.capacity; // Removing elements borks up the size, so we reset it.
+        this.capacity = Math.round(1.5f * this.capacity);
+        this.front = this.capacity - 1;
+        this.elements = newElemsArr;
     }
 }
 
@@ -150,6 +211,23 @@ class DequeueArrayPlusOne<E> extends DequeueArray<E> {
      *  Grows the array by increasing the capacity by 1
      */
     void grow() {
-        // TODO
+        Optional<E>[] newElemsArr = new Optional[this.capacity + 1];
+        for (int i = 0; i < this.capacity; i++) {
+            try {
+                // Go through and build the new array IN ORDER
+                newElemsArr[i] = Optional.of(this.removeFirst());
+            } catch (NoSuchElementE e) { System.out.println("SOMETHING WENT VERY VERY WRONG! This should never happen."); }
+        }
+        // Populate the rest with empty Optionals
+        newElemsArr[this.capacity] = Optional.empty();
+
+        /* The new back should be after all the original elements are inserted.
+           Luckily, we know that elements end at this.capacity - 1, so the new
+           back will be at the index of the old capacity!                       */
+        this.back = this.capacity;
+        this.size = this.capacity; // Removing elements borks up the size, so we reset it.
+        this.capacity += 1;
+        this.front = this.capacity - 1;
+        this.elements = newElemsArr;
     }
 }
