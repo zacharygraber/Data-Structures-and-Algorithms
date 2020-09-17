@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0d901cd8-f4e2-43a5-92e7-d64c854febb2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../L2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L2/D1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/D1.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/A.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/EmptyQueueE.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/production/D1/EmptyQueueE.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/EmptyS.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/production/D1/EmptyS.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/EmptyStackE.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/production/D1/EmptyStackE.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/Mutable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/NonEmptyS.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/production/D1/NonEmptyS.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/Queue.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/production/D1/Queue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L2/out/production/D1/Stack.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/production/D1/Stack.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L2/out/test/D1/QueueTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/test/D1/QueueTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L2/out/test/D1/StackTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/out/test/D1/StackTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L2/src/Queue.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/src/Queue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L2/test/QueueTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../L2/test/QueueTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L3/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../L3/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L3/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../L3/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L3/L3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../L3/L3.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L3/src/Counter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../L3/src/Counter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../L3/test/CounterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../L3/test/CounterTest.java" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1hMjK3JtM42PHMVpjvx1gc86ElY" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0d901cd8-f4e2-43a5-92e7-d64c854febb2" name="Default Changelist" comment="" />
+      <created>1599827787811</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1599827787811</updated>
+      <workItem from="1599827788950" duration="65000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
