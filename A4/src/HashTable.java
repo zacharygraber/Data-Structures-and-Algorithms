@@ -92,21 +92,112 @@ abstract class HashTable<K,V> {
     private ArrayList<Entry<K,V>> slots;
 
     HashTable (HashFunction<K> basicF, BiFunction<K,Integer,Integer> adjustF) {
-        // TODO
+        this.f = new HashFunctionIndexed<>(basicF, adjustF);
+
+        this.capacity = basicF.getBound();
+
+        // Create and initialize the ArrayList of slots
+        this.slots = new ArrayList<>(this.capacity);
+        for (int i = 0; i < this.capacity; i++) {
+            this.slots.add(new Empty<>());
+        }
     }
 
     int getCapacity () { return capacity; }
 
     void insert (K key, V value) {
-        // TODO
+        int startingHash = f.apply(key, 0);
+        int thisHash;
+        int i = 0;
+        while (true) {
+            thisHash = f.apply(key, i);
+            if (this.slots.get(thisHash).available()) {
+                this.slots.set(thisHash, new KeyValue<>(key, value));
+                return;
+            }
+            // If we have completed an entire cycle around the ArrayList to no avail, then we consider the HashTable to be full.
+            else if (i != 0 && thisHash == startingHash) {
+                this.rehash();
+                this.insert(key, value);
+                return;
+            }
+            i++;
+        }
     }
 
     void delete (K key) {
-        // TODO
+        /* There are 5 cases here each loop:
+         * Case 1: h is a KeyValue and matches the key
+         * Case 2: h is a KeyValue, but not the key
+         * Case 3: h is an Empty
+         * Case 4: h is a Deleted
+         * Case 5: we've completed an entire loop around the ArrayList without finding a KeyValue matching the key
+         *
+         * If we reach Case 1, we have found the key, and mark it as deleted.
+         * If we reach Case 3 or Case 5, we know that the key does not exist in the table, so we return.
+         * If we reach Case 4 or Case 2, we proceed to the next value of h                                          */
+
+        int startingH = f.apply(key, 0);
+        int h;
+        int i = 0;
+        while (true) {
+            h = f.apply(key, i);
+            // Case 1
+            if (this.slots.get(h) instanceof KeyValue && ((KeyValue<K, V>) this.slots.get(h)).getKey() == key) {
+                this.slots.set(h, new Deleted<>());
+                return;
+            }
+
+            // Case 3
+            else if (this.slots.get(h) instanceof Empty) {
+                return;
+            }
+
+            // Case 5
+            else if (i != 0 && h == startingH) {
+                return;
+            }
+
+            // Cases 2 and 4 do nothing, just loop.
+            i++;
+        }
     }
 
     Optional<V> search (K key) {
-        return null; // TODO
+        /* There are 5 cases here each loop:
+         * Case 1: h is a KeyValue and matches the key
+         * Case 2: h is a KeyValue, but not the key
+         * Case 3: h is an Empty
+         * Case 4: h is a Deleted
+         * Case 5: we've completed an entire loop around the ArrayList without finding a KeyValue matching the key
+         *
+         * If we reach Case 1, we have found the key, and return a new Optional containing the value there.
+         * If we reach Case 3 or Case 5, we know that the key does not exist in the table, so we return an empty Optional.
+         * If we reach Case 4 or Case 2, we proceed to the next value of h                                                     */
+
+        int startingH = f.apply(key, 0);
+        int h;
+        int i = 0;
+        while (true) {
+            h = f.apply(key, i);
+            // Case 1
+            if (this.slots.get(h) instanceof KeyValue && ((KeyValue<K, V>) this.slots.get(h)).getKey() == key) {
+                return Optional.of(((KeyValue<K, V>) this.slots.get(h)).getValue());
+            }
+
+            // Case 3
+            else if (this.slots.get(h) instanceof Empty) {
+                return Optional.empty();
+            }
+
+            // Case 5
+            else if (i != 0 && h == startingH) {
+                return Optional.empty();
+            }
+
+            // Cases 2 and 4 do nothing, just loop.
+            i++;
+        }
     }
 
     /**
@@ -115,7 +206,20 @@ abstract class HashTable<K,V> {
      * array
      */
     void rehash () {
-        // TODO
+        ArrayList<Entry<K, V>> oldSlots = (ArrayList<Entry<K,V>>) this.slots.clone();
+        this.capacity *= 2;
+        this.f.setBound(this.capacity);
+        this.slots = new ArrayList<>(this.capacity);
+        for (int i = 0; i < this.capacity; i++) {
+            this.slots.add(new Empty<>());
+        }
+        Entry<K, V> thisEntry;
+        for (int i = 0; i < oldSlots.size(); i++) {
+            thisEntry = oldSlots.get(i);
+            if (thisEntry instanceof KeyValue) {
+                this.insert(((KeyValue<K, V>) thisEntry).getKey(), ((KeyValue<K, V>) thisEntry).getValue());
+            }
+        }
     }
 
     public String toString () {

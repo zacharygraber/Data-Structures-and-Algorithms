@@ -38,7 +38,7 @@ class HashMod<K> extends HashFunction<K> {
     void setBound (int bound) { this.bound = bound; }
 
     public Integer apply (K key) {
-        return 0; // TODO
+        return Math.floorMod(key.hashCode(), this.bound);
     }
 }
 
@@ -62,7 +62,9 @@ class HashUniversal<K> extends HashFunction<K> {
     private Random r;
 
     HashUniversal (Random r, int bound) {
-        // TODO
+        this.m = bound;
+        this.p = ((BigInteger.valueOf(bound)).nextProbablePrime()).intValue();
+        this.a = r.nextInt(this.p - 2) + 1;
     }
 
     int getBound () { return m; }
@@ -99,8 +101,8 @@ class HashUniversal<K> extends HashFunction<K> {
  * the following calculation:
  *   - the basic hash function is applied to the key to produce
  *     an integer 'i'
- *   - the function 'adjustF' is applied to the key and
- *     the previous result 'i' to produce an integer 'j'
+ *   - The function 'adjustF' is applied to the key and index to
+ *     produce an integer 'j'.
  *   - the final result is the sum of 'i' and 'j' (adjusted to
  *     be in the range 0..bound-1
  */
@@ -123,7 +125,7 @@ class HashFunctionIndexed<K> implements BiFunction<K,Integer,Integer> {
     }
 
     public Integer apply (K key, Integer index) {
-        return 0; // TODO
+        return Math.floorMod(this.basicF.apply(key) + this.adjustF.apply(key, index), this.bound);
     }
 
 }
