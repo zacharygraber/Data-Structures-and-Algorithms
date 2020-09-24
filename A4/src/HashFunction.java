@@ -62,9 +62,11 @@ class HashUniversal<K> extends HashFunction<K> {
     private Random r;
 
     HashUniversal (Random r, int bound) {
+        this.r = r;
         this.m = bound;
         this.p = ((BigInteger.valueOf(bound)).nextProbablePrime()).intValue();
-        this.a = r.nextInt(this.p - 2) + 1;
+        this.a = this.r.nextInt(this.p - 1) + 1; // Generates a number in [0, p-1) then adds 1 to get in range [1,p-1]
+        this.b = this.r.nextInt(this.p); // Generates a number in [0, p), which is equivalent to [0, p-1]
     }
 
     int getBound () { return m; }
@@ -75,7 +77,10 @@ class HashUniversal<K> extends HashFunction<K> {
      * constructor.
      */
     void setBound (int bound) {
-        // TODO
+        this.m = bound;
+        this.p = ((BigInteger.valueOf(bound)).nextProbablePrime()).intValue();
+        this.a = this.r.nextInt(this.p - 1) + 1; // Generates a number in [0, p-1) then adds 1 to get in range [1,p-1]
+        this.b = this.r.nextInt(this.p); // Generates a number in [0, p), which is equivalent to [0, p-1]
     }
 
     /**
@@ -84,7 +89,7 @@ class HashUniversal<K> extends HashFunction<K> {
      * this integer as explained in the book.
      */
     public Integer apply (K key) {
-        return 0; // TODO
+        return Math.floorMod(Math.floorMod(this.a * (key.hashCode()) + this.b, this.p), this.m);
     }
 }
 
