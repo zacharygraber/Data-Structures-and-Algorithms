@@ -44,16 +44,23 @@ class CoinChange {
     static int memoCoinChange(List<Integer> coins, int target) {
         return coinChangeMemo.computeIfAbsent(new Pair<>(coins,target), p->{
             try {
-                // Base case
-                if (target == coins.getFirst()) {
-                    return 1;
+                // Base Case
+                if (target == 0) {
+                    return 0;
                 }
-                else if (target < coins.getFirst()) {
+                // If the target is smaller than the current coin, there's no way to use it, so try the next smallest one
+                if (target < coins.getFirst()) {
                     return memoCoinChange(coins.getRest(), target);
                 }
 
-                // case a represents using this coin, whereas case b is the option to use the next coin instead
+                // case A represents using this coin, whereas case b is the option to use the next coin instead
+
+                // This if statement prevents overflowing and wrapping back to a smaller value, thus messing up the comparison.
                 int a = memoCoinChange(coins, target - coins.getFirst());
+                if (a != Integer.MAX_VALUE) {
+                    a += 1;
+                }
+
                 int b = memoCoinChange(coins.getRest(), target);
                 return (a < b) ? a : b; // return the smaller of the two
             }
