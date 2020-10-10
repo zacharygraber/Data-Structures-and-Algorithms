@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.function.Function;
@@ -111,11 +112,59 @@ public class SeamCarving {
     Map<Position, Pair<List<Position>, Integer>> hash = new WeakHashMap<>();
 
     Pair<List<Position>, Integer> findSeam(int hp, int wp) {
-        return;
+        Position thisPos = new Position(hp, wp);
+        if (hash.containsKey(thisPos)) {
+            return hash.get(thisPos);
+        }
+        else {
+            Pair<List<Position>, Integer> result;
+
+            // Compute costs of each neighbor below.
+            ArrayList<Pair<List<Position>, Integer>> neighborsBelow = new ArrayList<>();
+            for (Position p : getBelowNeighbors(hp, wp)) {
+                if (!hash.containsKey(p)) {
+                    hash.put(p, findSeam(p.getFirst(), p.getSecond()));
+                }
+                neighborsBelow.add(hash.get(p));
+            }
+
+            // The base case, where we've reached the bottom of the image.
+            // Return a pair with the List as just this position (there is no next), and the cost as this pixel's energy
+            if (neighborsBelow.size() == 0) {
+                result = new Pair<>(new Node<>(thisPos, new Empty<>()), computeEnergy(hp, wp));
+                hash.put(thisPos, result);
+                return result;
+            }
+
+            // Find the minimum cost of all the neighbors and return it
+            Pair<List<Position>, Integer> minCostSeam = new Pair<>(null, Integer.MAX_VALUE);
+            for (Pair<List<Position>, Integer> thisSeam : neighborsBelow) {
+                if (thisSeam.getSecond() < minCostSeam.getSecond()) {
+                    minCostSeam = thisSeam;
+                }
+            }
+
+            // Make and return a new Pair to represent the optimal seam at this pixel.
+            //  The List is the location of this pixel, with a *next* value of the path of the lowest-cost neighbor.
+            //  The cost is the energy of this pixel, plus the cost of the rest of the seam.
+            result = new Pair<List<Position>, Integer>(new Node<>(thisPos, minCostSeam.getFirst()), computeEnergy(hp, wp) + minCostSeam.getSecond());
+            hash.put(thisPos, result);
+            return result;
+        }
     }
 
     Pair<List<Position>, Integer> bestSeam() {
-        return;
+        hash.clear();
+        Pair<List<Position>, Integer> lowestCostSeam=null, thisSeam;
+        int lowestCost = Integer.MAX_VALUE;
+        for (int i = 0; i < this.getWidth(); i++) {
+            thisSeam = findSeam(0, i);
+            if (thisSeam.getSecond() < lowestCost) {
+                lowestCostSeam = thisSeam;
+                lowestCost = thisSeam.getSecond();
+            }
+        }
+        return lowestCostSeam;
     }
 
     // Putting it all together; find best seam and copy pixels without that seam
