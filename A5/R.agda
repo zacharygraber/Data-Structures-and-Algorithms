@@ -16,12 +16,13 @@ test1 = refl
 
 rev1++ : {A : Set} → (xs : List A) → (ys : List A) →
          rev1 (xs ++ ys) ≡ rev1 ys ++ rev1 xs
-rev1++ [] ys = {!!}
+rev1++ [] ys = {refl}0
 rev1++ (x ∷ xs) ys =
   rev1 ((x ∷ xs) ++ ys)
     ≡⟨ {!!} ⟩ 
   rev1 ys ++ rev1 (x ∷ xs) ∎
 
+{-
 rev1rev1 : {A : Set} → (xs : List A) → rev1 (rev1 xs) ≡ xs
 rev1rev1 [] = {!!} 
 rev1rev1 (x ∷ xs) =
@@ -31,7 +32,6 @@ rev1rev1 (x ∷ xs) =
 
 --
 -- Efficient reverse and its correctness
-
 rev2H : {A : Set} → List A → List A → List A
 rev2H [] ys = ys
 rev2H (x ∷ xs) ys = rev2H xs (x ∷ ys)
@@ -67,3 +67,4 @@ rev1≡rev2 xs =
   rev1 xs ∎ 
 
 --
+-}

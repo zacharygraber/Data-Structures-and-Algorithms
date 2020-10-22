@@ -250,6 +250,18 @@ public class SeamCarvingTest {
     }
 
     @Test
+    public void cutPumpkinMan () throws IOException {
+        SeamCarving sc = new SeamCarving();
+        sc.readImage("field.jpg");
+        int bound = sc.getWidth() * 1 / 3;
+        for (int i=0; i<bound; i++) {
+            System.out.printf("%d of %d%n", i+1, bound);
+            sc.cutSeam();
+        }
+        sc.writeImage("fieldCut.jpg");
+    }
+
+    @Test
     public void seam () throws IOException {
         int H = 3; int W = 5;
         int red = Color.red.getRGB();

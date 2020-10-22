@@ -114,6 +114,7 @@ public class SeamCarving {
     Pair<List<Position>, Integer> findSeam(int hp, int wp) {
         Position thisPos = new Position(hp, wp);
         if (hash.containsKey(thisPos)) {
+            System.out.println("ACCESSED HASH");
             return hash.get(thisPos);
         }
         else {
