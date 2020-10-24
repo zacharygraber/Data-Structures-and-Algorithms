@@ -1,0 +1,3 @@
+# Okay, so basically...
+
+I have tried, once again fruitlessly, to get Agda working on any device that I own. I've tried dual boots, VMs, weird sketchy Windows builds--you name it. At the very least, I'm gonna upload this PDF with the proofs that you know that I know how to do these proofs; I just can't get them in the stupid software.
