@@ -40,6 +40,13 @@ public class BSTTest {
         assertFalse(bst.BSTfind(1000));
         assertTrue(bst.BSTfind(100));
         assertTrue(bst.BSTfind(-100));
+
+        Iterator<Integer> iter = bst.iterator();
+        int i;
+        while (iter.hasNext()) {
+            i = iter.next();
+            assertTrue(bst.BSTfind(i));
+        }
     }
 
     @Test

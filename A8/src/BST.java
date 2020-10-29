@@ -177,19 +177,88 @@ class BSTNode extends BST {
     //--------------------------
 
     boolean BSTfind(int key) {
-        return false; // TODO
+        if (this.BSTData() == key) {
+            return true;
+        }
+        return key < this.BSTData() ? this.BSTLeft().BSTfind(key) : this.BSTRight().BSTfind(key);
     }
 
     BST BSTinsert(int key) {
-        return null; // TODO
+        BSTNode temp = new BSTNode(this.BSTData(), this.BSTLeft(), this.BSTRight());
+        if (key < this.BSTData()) {
+            temp.left = temp.BSTLeft().BSTinsert(key);
+        }
+        else {
+            temp.right = temp.BSTRight().BSTinsert(key);
+        }
+        temp.height = 1 + Math.max(temp.left.BSTHeight(), temp.right.BSTHeight());
+        return temp;
     }
 
     BST BSTdelete(int key) throws EmptyBSTE {
-        return null; // TODO
+        BSTNode temp = new BSTNode(this.BSTData(), this.BSTLeft(), this.BSTRight());
+        if (key < temp.BSTData()) {
+            temp.left = temp.BSTLeft().BSTdelete(key);
+        }
+        else if (key > temp.BSTData()) {
+            temp.right = temp.BSTRight().BSTdelete(key);
+        }
+        else { // If the key is equal to the data here, then the key is found at this node
+            // If this node is a leaf, we're safe to delete it outright.
+            if (this.BSTHeight() == 1) {
+                return EBST;
+            }
+            // Otherwise, if this node has a right subtree replace it with the leftmost node in its right subtree
+            else if (!(this.BSTRight().isEmpty())) {
+                Pair<Integer, BST> delLeftmostInRight = this.BSTRight().BSTdeleteLeftMostLeaf();
+                temp.data = delLeftmostInRight.getFirst();
+                temp.right = delLeftmostInRight.getSecond();
+            }
+            // If there is no right subtree, then replace this node with its left subtree
+            else {
+                temp = (BSTNode) temp.BSTLeft();
+            }
+        }
+        temp.height = 1 + Math.max(temp.left.BSTHeight(), temp.right.BSTHeight());
+        return temp;
     }
 
     Pair<Integer, BST> BSTdeleteLeftMostLeaf() {
-        return null; // TODO
+        return new Pair<>(this.leftmostNodeData(), this.leftMostLeafHelper());
+    }
+
+    // Recursive helper method for BSTdeleteLeftMostLeaf()
+    // Returns this BST with the leftmost node removed.
+    private BST leftMostLeafHelper() {
+        /* Base Case:
+         *     If this node has no left subtree, then this is the leftmost node.
+         *     Return an empty node up the stack                                  */
+        if (this.BSTLeft().isEmpty()) {
+            return EBST;
+        }
+
+        // Recursive step:
+        //     Otherwise, recursively call this method on the left subtree
+        else {
+            BSTNode temp = new BSTNode(this.BSTData(), this.BSTLeft(), this.BSTRight());
+            temp.left = ((BSTNode) BSTLeft()).leftMostLeafHelper();
+            return temp;
+        }
+    }
+
+    // Recursive helper method for BSTdeleteLeftMostLeaf()
+    // Returns the data at the leftmost leaf of this BST
+    private int leftmostNodeData() {
+        /* Base Case:
+         *     If this node has no left subtree, then this is the leftmost node.
+         *     Return the data here                                              */
+        if (this.BSTLeft().isEmpty()) {
+            return this.BSTData();
+        }
+
+        // Recursive step:
+        //     Otherwise, recursively call this method on the left subtree
+        return ((BSTNode) this.BSTLeft()).leftmostNodeData();
     }
 
     //--------------------------
@@ -213,7 +282,35 @@ class BSTNode extends BST {
     //--------------------------
 
     public Iterator<Integer> iterator() {
-        return null; // TODO
+        return new Iterator<Integer>()
+        {
+            // Make an iterator for the left and right subtrees
+            Iterator<Integer> leftIter = left.iterator();
+            Iterator<Integer> rightIter = right.iterator();
+            boolean thisVisited = false;
+
+            @Override
+            public boolean hasNext()
+            {
+                // If left, center, or right not fully visited yet, return true
+                return leftIter.hasNext() || (!thisVisited) || rightIter.hasNext();
+            }
+
+            @Override
+            public Integer next()
+            {
+                if (leftIter.hasNext()) { // If the leftIter has a next, then the left subtree has not been fully visited yet
+                    return leftIter.next();
+                }
+                else if (!thisVisited) { // Visit the root
+                    thisVisited = true;
+                    return data;
+                }
+                else { // If the rightIter has a next, then the right subtree  has not been explored all the way
+                    return rightIter.next();
+                }
+            }
+        };
     }
 }
 
