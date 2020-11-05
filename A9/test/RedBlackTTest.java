@@ -129,4 +129,39 @@ class RedBlackTTest {
         assertEquals(4,h);
 
     }
+
+    @Test
+    public void evenHeightCallsColorBlackEven () {
+        AVL<Integer> avl = new EmptyAVL<>();
+        avl = avl.AVLinsert(5);
+        avl = avl.AVLinsert(3);
+        avl = avl.AVLinsert(8);
+        avl = avl.AVLinsert(10);
+        assertEquals(4, avl.AVLHeight());
+
+        RedBlackT<Integer> rb = avl.toRB();
+        assertEquals(avl.colorBlackEven(), rb);
+        assertEquals(3, rb.isValidTree().get());
+        assertFalse(avl.colorBlackOdd().isValidTree().isPresent()); // Calling odd would result in an invalid tree.
+    }
+
+    @Test
+    public void oddHeightCallsColorBlackOdd () {
+        AVL<Integer> avl = new EmptyAVL<>();
+        avl = avl.AVLinsert(5);
+        avl = avl.AVLinsert(3);
+        avl = avl.AVLinsert(8);
+        avl = avl.AVLinsert(10);
+        avl = avl.AVLinsert(12);
+        avl = avl.AVLinsert(13);
+        avl = avl.AVLinsert(14);
+        avl = avl.AVLinsert(15);
+        assertEquals(5, avl.AVLHeight());
+
+        RedBlackT<Integer> rb = avl.toRB();
+        TreePrinter.print(rb);
+        assertEquals(avl.colorBlackOdd(), rb);
+        assertEquals(3, rb.isValidTree().get());
+        assertFalse(avl.colorBlackEven().isValidTree().isPresent()); // Calling even would result in an invalid tree.
+    }
 }
