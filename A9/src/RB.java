@@ -174,11 +174,25 @@ class RBNode<E> extends RedBlackT<E> {
     //--------------------------
 
     Optional<Integer> isValidBlackTree() {
-        return null; // TODO
+        if (!this.color.equals(Color.BLACK)) return Optional.empty(); // If this isn't a black tree at all
+
+        Optional<Integer> l = this.RBLeft().isValidTree();
+        Optional<Integer> r = this.RBRight().isValidTree();
+        if (!(l.equals(r))) {
+            return Optional.empty(); // If the two subtrees don't have the same black height...
+        }
+        return l.isPresent() ? Optional.of(1 + l.get()) : Optional.of(1);
     }
 
     Optional<Integer> isValidRedTree() {
-        return null; // TODO
+        if (!this.color.equals(Color.RED)) return Optional.empty(); // If this isn't a red tree at all
+
+        Optional<Integer> l = this.RBLeft().isValidTree();
+        Optional<Integer> r = this.RBRight().isValidTree();
+        if (!(l.equals(r))) {
+            return Optional.empty(); // If the two subtrees don't have the same black height...
+        }
+        return l;
     }
 
     //--------------------------

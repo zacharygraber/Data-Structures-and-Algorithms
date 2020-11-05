@@ -159,19 +159,20 @@ class EmptyAVL<E extends Comparable<E>> extends AVL<E> {
     }
 
     RedBlackT<E> toRB () {
-        return null; // TODO
+        // Coloring an empty AVL tree red and black should yield an empty RB Tree
+        return new EmptyRB<>();
     }
 
     RedBlackT<E> colorBlackEven () {
-        return null; // TODO
+        return new EmptyRB<>();
     }
 
     RedBlackT<E> colorBlackOdd () {
-        return null; // TODO
+        return new EmptyRB<>();
     }
 
     RedBlackT<E> colorRed  () {
-        return null; // TODO
+        return new EmptyRB<>();
     }
 
     //--------------------------
@@ -244,43 +245,107 @@ class AVLNode<E extends Comparable<E>> extends AVL<E> {
     //--------------------------
 
     boolean AVLfind(E key) {
-        return false; // TODO
+        if (this.AVLData() == key) {
+            return true;
+        }
+        return key.compareTo(this.AVLData()) < 0 ? this.AVLLeft().AVLfind(key) : this.AVLRight().AVLfind(key);
     }
 
     AVL<E> AVLinsert(E key) {
-        return null; // TODO
+        if (key.compareTo(this.AVLData()) < 0) {
+            AVL<E> newLeft = this.AVLLeft().AVLinsert(key); // Make a new left branch by recursively inserting there
+            AVLNode<E> result = new AVLNode<>(this.AVLData(), newLeft, this.AVLRight()); // Define the resulting tree as root of this, left newLeft, and right this.right
+            if (result.left.AVLHeight() > result.right.AVLHeight() + 1) {
+                result = (AVLNode<E>) result.AVLrotateRight();
+            }
+            return result;
+        }
+        else {
+            AVL<E> newRight = this.AVLRight().AVLinsert(key);
+            AVLNode<E> result = new AVLNode<>(this.AVLData(), this.AVLLeft(), newRight);
+            if (result.right.AVLHeight() > result.left.AVLHeight() + 1) {
+                result = (AVLNode<E>) result.AVLrotateLeft();
+            }
+            return result;
+        }
     }
 
     AVL<E> AVLeasyRight() {
-        return null; // TODO
+        AVLNode<E> newRight;
+        AVLNode<E> l = (AVLNode<E>) this.AVLLeft(); // Define l as the left subtree of the original root
+
+        newRight = new AVLNode<>(this.data, l.AVLRight(), this.right); // Define newRight as the original root, with the left reference as the right subtree of l
+
+        return new AVLNode<>(l.AVLData(), l.AVLLeft(), newRight); // Return the left subtree as the new root, with the right reference as newRight
     }
 
     AVL<E> AVLrotateRight() {
-        return null; // TODO
+        AVLNode<E> l = (AVLNode<E>) this.left;
+        if (l.AVLRight().AVLHeight() > l.AVLLeft().AVLHeight()) {
+            l = (AVLNode<E>) l.AVLeasyLeft();
+        }
+        AVL<E> root = new AVLNode<>(this.AVLData(), l, this.AVLRight());
+        return root.AVLeasyRight();
     }
 
     AVL<E> AVLeasyLeft() {
-        return null; // TODO
+        AVLNode<E> newLeft;
+        AVLNode<E> r = (AVLNode<E>) this.AVLRight(); // Define r as the right subtree of the original root
+
+        newLeft = new AVLNode<>(this.data, this.left, r.AVLLeft()); // Define newLeft as the original root, with the right reference as the left subtree of r
+
+        return new AVLNode<>(r.AVLData(), newLeft, r.AVLRight()); // Return the right subtree as the new root, with the left reference as newLeft
     }
 
     AVL<E> AVLrotateLeft() {
-        return null; // TODO
+        AVLNode<E> r = (AVLNode<E>) this.right;
+        if (r.AVLLeft().AVLHeight() > r.AVLRight().AVLHeight()) {
+            r = (AVLNode<E>) r.AVLeasyRight();
+        }
+        AVL<E> root = new AVLNode<>(this.AVLData(), this.AVLLeft(), r);
+        return root.AVLeasyLeft();
     }
 
     RedBlackT<E> toRB () {
-        return null; // TODO
+        if (this.AVLHeight() % 2 == 0) { // If the height is even.
+            return this.colorBlackEven();
+        }
+        return this.colorBlackOdd(); // If the height is odd.
     }
 
     RedBlackT<E> colorBlackEven () {
-        return null; // TODO
+        RedBlackT<E> l, r;
+        l = this.AVLLeft().toRB();
+        r = this.AVLRight().toRB();
+        return new RBNode<>(this.AVLData(), Color.BLACK, l, r);
     }
 
     RedBlackT<E> colorBlackOdd () {
-        return null; // TODO
+        RedBlackT<E> l, r;
+        if (this.AVLLeft().AVLHeight() == this.AVLRight().AVLHeight()) {
+            // If the children are of equal height, generate two red nodes.
+            l = this.AVLLeft().colorRed();
+            r = this.AVLRight().colorRed();
+        }
+        else {
+            // Otherwise, the shorter one is black and the taller one is red
+            if (this.AVLLeft().AVLHeight() < this.AVLRight().AVLHeight()) {
+                l = this.AVLLeft().toRB(); // toRB() will color black, and determine which method to call
+                r = this.AVLRight().colorRed();
+            }
+            else {
+                l = this.AVLLeft().colorRed();
+                r = this.AVLRight().toRB();
+            }
+        }
+        return new RBNode<>(this.AVLData(), Color.BLACK, l, r);
     }
 
     RedBlackT<E> colorRed  () {
-        return null; // TODO
+        RedBlackT<E> l, r;
+        l = this.AVLLeft().toRB();
+        r = this.AVLRight().toRB();
+        return new RBNode<>(this.AVLData(), Color.RED, l, r);
     }
 
     //--------------------------
