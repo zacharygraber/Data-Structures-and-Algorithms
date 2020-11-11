@@ -168,6 +168,13 @@ class GameQuadTree extends Game {
     QuadTree getRegion () { return region; }
 
     void step() {
+        // DEBUGGING! TODO: REMOVE THIS WHEN DONE
+        for (boolean[] arr : QuadTree.toArray(region)) {
+            for (boolean val : arr) {
+                System.out.print(val ? "+" : "-");
+            }
+            System.out.print("\n");
+        }
         try {
             while (region.getLevel() < 3 ||
                     region.getNW().liveCells() != region.getNW().getSE().getSE().liveCells() ||
@@ -182,6 +189,13 @@ class GameQuadTree extends Game {
                         QuadTree.newRegion(empty,empty,region.getNE(),empty),
                         QuadTree.newRegion(empty,region.getSW(),empty,empty),
                         QuadTree.newRegion(region.getNE(),empty,empty,empty));
+                // DEBUGGING! TODO: REMOVE THIS WHEN DONE
+                for (boolean[] arr : QuadTree.toArray(region)) {
+                    for (boolean val : arr) {
+                        System.out.print(val ? "+" : "-");
+                    }
+                    System.out.print("\n");
+                }
             }
             region = region.step();
         }

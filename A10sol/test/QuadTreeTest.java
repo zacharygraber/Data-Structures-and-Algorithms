@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class QuadTreeTest {
@@ -52,5 +54,37 @@ class QuadTreeTest {
         QuadTree.hash.clear();
         GameQuadTree toad = new GameQuadTree(8, 500, Games.toad);
         toad.step();
+    }
+
+    @Test
+    void fromArrayBuildingRegionsCorrectly() throws WrongRegionE
+    {
+        boolean[][] expected = {{false,false,false,false},
+                                {true, true, true, false},
+                                {false,false,false,false},
+                                {false,false,false,false}};
+
+        boolean[][] expectedNW = {{false, false},
+                                  {true,  true}};
+
+        boolean[][] expectedNE = {{false, false},
+                                  {true,  false}};
+
+        boolean[][] expectedSW = {{false, false},
+                                  {false, false}};
+        boolean[][] expectedSE = {{false, false},
+                                  {false, false}};
+        QuadTree t = QuadTree.fromArray(4, expected);
+        assertArrayEquals(expected, QuadTree.toArray(t));
+        assertArrayEquals(expectedNW, QuadTree.toArray(t.getNW()));
+        assertArrayEquals(expectedNE, QuadTree.toArray(t.getNE()));
+        assertArrayEquals(expectedSW, QuadTree.toArray(t.getSW()));
+        assertArrayEquals(expectedSE, QuadTree.toArray(t.getSE()));
+
+        assertEquals(2, t.getLevel());
+        assertEquals(1, t.getNE().getLevel());
+        assertEquals(1, t.getNW().getLevel());
+        assertEquals(1, t.getSW().getLevel());
+        assertEquals(1, t.getSE().getLevel());
     }
 }

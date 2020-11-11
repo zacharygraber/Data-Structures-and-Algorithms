@@ -1,0 +1,90 @@
+Blinker Test
+
+This yields a StackOverflowError at Region.step(QuadTree.java:192), most likely caused due to infinite recursion
+exceeding the max stack depth for function calls.
+
+I'm going to start by verifying that the different regions are actually being constructed correctly in QuadTree.fromArray()
+in test case "fromArrayBuildingRegionsCorrectly."
+
+This test verified for me that fromArray() is building regions how I would expect, and that those regions have the proper k
+values.
+
+in QuadTreeTest, blinker is a GameQuadTree object, and we've verified that its member "region" is proper. The problems
+happen when we call blinker.step(), so they originate in GameQuadTree.step() [although they could be caused by Region.step()].
+Using IntelliJ's debugger, I found that Region.step() is eventually being called with nextGen = null and k = 4.
+
+The infinite recursion is happening on line 202 of QuadTree.java, where .step() is constantly called on a Region with
+k=3, which causes a call on a Region with size k=3, and so on.
+
+When Region.step() is called, the board looks like this:
+- - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - -
+- - - - - - - + - - - - - - - -
+- - - - - - - + - - - - - - - -
+- - - - - - - + - - - - - - - -
+- - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - -
+
+We then assign n00 as nw.step()
+nw looks like so:
+- - - - - - - -
+- - - - - - - -
+- - - - - - - -
+- - - - - - - -
+- - - - - - - -
+- - - - - - - -
+- - - - - - - +
+- - - - - - - +
+
+    Now in nw.step(), k = 3, so we define n00 as nw.step()
+    This nw would be nw of the nw we already have, or:
+    - - - -
+    - - - -
+    - - - -
+    - - - -
+
+        Now effectively in nw.nw.step(), k=2, so we just step the game board as an array
+        RETURN UP THE STACK:
+        - - - -
+        - - - -
+        - - - -
+        - - - -
+
+    Following the same process, we get...
+
+    n00, n01, n02, n10, n11, n12, n20, n21, n22:
+    - - - -
+    - - - -
+    - - - -
+    - - - -
+
+    Now, with all these defined as empty 4x4 areas, we define nnw as a new 8x8 region:
+    - - - - - - - -
+    - - - - - - - -
+    - - - - - - - -
+    - - - - - - - -
+    - - - - - - - -
+    - - - - - - - -
+    - - - - - - - -
+    - - - - - - - -
+    and .step() it.
+
+        Now in this step, k=3. Hopefully it is obvious that all n00, n01, n02, n10, etc. will be empty 4x4 Regions.
+
+        So we then again define nnw as a new empty 8x8 region, and the cycle repeats.
+
+
+This is our infinite loop.
+
+Inspecting the source code for the algorithm on https://www.drdobbs.com/jvm/an-algorithm-for-compressing-space-and-t/184406478?pgno=2
+suggests that the implementation given in this assignment (at least the .step() and accompanying methods) is identical to
+the desired one. This means the issue must be somewhere BEFORE
