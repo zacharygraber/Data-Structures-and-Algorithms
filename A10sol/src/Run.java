@@ -147,3 +147,12 @@ class GliderMatrix {
         glider.run();
     }
 }
+
+// This doesn't work!
+//class GliderQuadTree {
+//    public static void main(String[] args) {
+//        QuadTree.hash.clear();
+//        Game glider = new GameQuadTree(256, 500, Games.glider);
+//        glider.run();
+//    }
+//}

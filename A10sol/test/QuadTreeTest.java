@@ -47,6 +47,15 @@ class QuadTreeTest {
         QuadTree.hash.clear();
         GameQuadTree blinker = new GameQuadTree(4, 500, Games.blinker);
         blinker.step();
+
+        // DEBUGGING!
+        System.out.println("RESULT:");
+        for (boolean[] arr : QuadTree.toArray(blinker.getRegion())) {
+            for (boolean val : arr) {
+                System.out.print(val ? "+" : "-");
+            }
+            System.out.print("\n");
+        }
     }
 
     @Test
@@ -54,6 +63,15 @@ class QuadTreeTest {
         QuadTree.hash.clear();
         GameQuadTree toad = new GameQuadTree(8, 500, Games.toad);
         toad.step();
+
+        // DEBUGGING!
+        System.out.println("RESULT:");
+        for (boolean[] arr : QuadTree.toArray(toad.getRegion())) {
+            for (boolean val : arr) {
+                System.out.print(val ? "+" : "-");
+            }
+            System.out.print("\n");
+        }
     }
 
     @Test

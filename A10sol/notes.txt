@@ -1,4 +1,12 @@
+                                                    ------------
+                                                    THE PROBLEM
+                                                    ------------
+The base case was returning something 4x4, breaking the invariant that .step() should return k-1 when called on k.
+
+
+------------
 Blinker Test
+------------
 
 This yields a StackOverflowError at Region.step(QuadTree.java:192), most likely caused due to infinite recursion
 exceeding the max stack depth for function calls.
@@ -86,5 +94,5 @@ nw looks like so:
 This is our infinite loop.
 
 Inspecting the source code for the algorithm on https://www.drdobbs.com/jvm/an-algorithm-for-compressing-space-and-t/184406478?pgno=2
-suggests that the implementation given in this assignment (at least the .step() and accompanying methods) is identical to
-the desired one. This means the issue must be somewhere BEFORE
+suggests that the implementation given in this assignment (at least the .step() and accompanying methods) is almost identical to
+the desired one. This means the issue must be either in the base case, or before the function (or in one of the helpers).

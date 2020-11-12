@@ -183,13 +183,16 @@ class Region extends QuadTree {
     QuadTree step() {
         if (nextGen != null) return nextGen;
         if (k == 2) { // have a 4x4 grid
+            // PROBLEM: This should give 2x2 squares but it gives a whole 4x4 region.
             GameMatrix g = new GameMatrix(4, 0, toArray(this));
             g.step();
-            nextGen = fromArray(4, g.getPoints());
+            boolean[][] fourByFourPoints = g.getPoints();
+            boolean[][] centerPoints = {{fourByFourPoints[1][1], fourByFourPoints[1][2]}, {fourByFourPoints[2][1], fourByFourPoints[2][2]}};
+            nextGen = fromArray(2, centerPoints);
             return nextGen;
         } else {
             try {
-                QuadTree n00 = nw.step();
+                QuadTree n00 = nw.step(); // If calling with k=4, nw.k=3, so nw.step.k=2, returns 4x4
                 QuadTree n01 = centeredHorizontal(nw, ne).step();
                 QuadTree n02 = ne.step();
                 QuadTree n10 = centeredVertical(nw, sw).step();
@@ -198,7 +201,7 @@ class Region extends QuadTree {
                 QuadTree n20 = sw.step();
                 QuadTree n21 = centeredHorizontal(sw, se).step();
                 QuadTree n22 = se.step();
-                QuadTree nnw = QuadTree.newRegion(n00, n01, n10, n11).step();
+                QuadTree nnw = QuadTree.newRegion(n00, n01, n10, n11).step(); // Builds 8x8 board, then steps, which should give 4x4
                 QuadTree nne = QuadTree.newRegion(n01, n02, n11, n12).step();
                 QuadTree nsw = QuadTree.newRegion(n10, n11, n20, n21).step();
                 QuadTree nse = QuadTree.newRegion(n11, n12, n21, n22).step();
