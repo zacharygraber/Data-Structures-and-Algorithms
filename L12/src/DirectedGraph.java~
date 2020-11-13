@@ -1,0 +1,76 @@
+import org.junit.jupiter.params.provider.CsvSource;
+
+import java.lang.reflect.Array;
+import java.util.*;
+
+public class DirectedGraph {
+    private final Hashtable<Integer,ArrayList<Edge>> neighbors;
+    private final Set<Integer> nodes;
+
+    DirectedGraph(Hashtable<Integer,ArrayList<Edge>> neighbors) {
+        this.neighbors = neighbors;
+        this.nodes = neighbors.keySet();
+    }
+
+    ArrayList<Integer> BFS (int source) {
+        // creating my arraylist to return
+        ArrayList<Integer> traversal = new ArrayList<>();
+
+        // creating my queue and visited structures
+        Queue<Integer> queue = new LinkedList<>();
+        HashSet<Integer> visited = new HashSet<>();
+
+        // enqueue source
+        queue.add(source);
+
+        while (queue.size() != 0) {
+            // dequeue a vertex from queue and print it
+            int curr = queue.poll();
+            if(!visited.contains(curr)) {
+                visited.add(curr);
+                traversal.add(curr);
+
+                // getting neighbors to add to the queue
+                for (Edge edge : neighbors.get(curr)) {
+                    int neighbor = edge.getDestination();
+                    if(!visited.contains(neighbor)) queue.add(neighbor);
+                }
+            }
+        }
+
+        return traversal;
+    }
+
+    ArrayList<Integer> DFS (int source) {
+        // creating my arraylist to return
+        ArrayList<Integer> traversal = new ArrayList<>();
+
+        // creating my queue and visited structures
+        Stack<Integer> stack = new Stack<>();
+        HashSet<Integer> visited = new HashSet<>();
+
+        // enqueue source
+        stack.push(source);
+
+        while (stack.size() != 0) {
+            // dequeue a vertex from queue and print it
+            int curr = stack.pop();
+            if (!visited.contains(curr)) {
+                visited.add(curr);
+                traversal.add(curr);
+
+                // getting neighbors to add to the queue
+                for (Edge edge : neighbors.get(curr)) {
+                    int neighbor = edge.getDestination();
+                    if (!visited.contains(neighbor)) stack.push(neighbor);
+                }
+            }
+        }
+
+        return traversal;
+    }
+
+    public String toString () {
+        return neighbors.toString();
+    }
+}
