@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 /**
@@ -33,7 +34,26 @@ public class Heap {
      * calling moveDown on each node.
      */
     void heapify () {
-        // TODO
+        // DEBUGGING //////////////////////////////////
+//        System.out.println("STARTING TREE");
+//        TreePrinter.print(nodes.get(0));
+//        System.out.println();
+        ///////////////////////////////////////////////
+
+        for (int i = (nodes.size() / 2) - 1; i >= 0; i--) {
+
+            // DEBUGGING /////////////////////////////////
+//            System.out.print("Array index " + i + ": ");
+//            System.out.print("[");
+//            for (Node n : nodes) {
+//                System.out.print(n.getValue() + ", ");
+//            }
+//            System.out.print("]\n");
+//            TreePrinter.print(nodes.get(0));
+            //////////////////////////////////////////////
+
+            this.moveDown(nodes.get(i));
+        }
     }
 
     Node getMin () { return nodes.get(0); }
@@ -44,26 +64,64 @@ public class Heap {
      * you outside the array bounds.
      */
     Optional<Node> getParent (Node n) {
-        return null; // TODO
+        // If this is already the root, return empty
+        if (n.getHeapIndex() == 0) {
+            return Optional.empty();
+        }
+        return Optional.of(nodes.get((n.getHeapIndex() - 1) / 2));
     }
 
     Optional<Node> getLeftChild (Node n) {
-        return null; // TODO
+        try {
+            return Optional.of(nodes.get((n.getHeapIndex() * 2) + 1));
+        }
+        catch (IndexOutOfBoundsException e) {
+            return Optional.empty();
+        }
     }
 
     Optional<Node> getRightChild (Node n) {
-        return null; // TODO
+        try {
+            return Optional.of(nodes.get((n.getHeapIndex() * 2) + 2));
+        }
+        catch (IndexOutOfBoundsException e) {
+            return Optional.empty();
+        }
     }
 
     Optional<Node> getMinChild (Node n) {
-        return null; // TODO
+        Optional<Node> left = this.getLeftChild(n);
+        Optional<Node> right = this.getRightChild(n);
+
+        // Case 1: both are empty - just return one of them
+        if (left.isEmpty() && right.isEmpty()) {
+            return left;
+        }
+        // Case 2: left is empty and right is not - return right
+        else if (left.isEmpty()) {
+            return right;
+        }
+        // Case 3: right is empty and left is not - return left
+        else if (right.isEmpty()) {
+            return left;
+        }
+        // Case 4: both are present - return the minimum value
+        else {
+            return left.get().getValue() < right.get().getValue() ? left : right;
+        }
     }
 
     /**
      * Simply swap the two nodes in the array.
      */
     void swap (Node n1, Node n2) {
-        // TODO
+        // Update their positions in the ArrayList
+        Collections.swap(nodes, n1.getHeapIndex(), n2.getHeapIndex());
+
+        // Update their heap indices stored
+        int temp = n1.getHeapIndex();
+        n1.setHeapIndex(n2.getHeapIndex());
+        n2.setHeapIndex(temp);
     }
 
     /**
@@ -72,7 +130,16 @@ public class Heap {
      *
      */
     void moveDown (Node n) {
-        // TODO
+        Optional<Node> minChildOpt = this.getMinChild(n);
+
+        // Protect against the case where this Node n has no children
+        if (minChildOpt.isPresent()) {
+            Node minChild = minChildOpt.get();
+            if (minChild.getValue() < n.getValue()) {
+                this.swap(minChild, n);
+                this.moveDown(n);
+            }
+        }
     }
 
     /**
@@ -80,7 +147,16 @@ public class Heap {
      * moving up recursively.
      */
     void moveUp (Node n) {
-        // TODO
+        Optional<Node> parentOpt = this.getParent(n);
+
+        // Protect against the case where this is already the root (has no parent)
+        if (parentOpt.isPresent()) {
+            Node parent = parentOpt.get();
+            if (n.getValue() < parent.getValue()) {
+                this.swap(n, parent);
+                this.moveUp(n);
+            }
+        }
     }
 
     void update (Node n, int value) {
@@ -95,6 +171,26 @@ public class Heap {
      * array to the first position, and call move down.
      */
     Node extractMin () {
-        return null; // TODO
+        if (this.size == 1) {
+            Node min = nodes.get(0);
+            nodes.clear();
+            this.size = 0;
+            return min;
+        }
+
+        Node min = nodes.get(0);
+
+        // Move the last node to the first position
+        nodes.set(0, nodes.get(nodes.size() - 1));
+        nodes.get(0).setHeapIndex(0);
+
+        // Trim the ArrayList to get rid of the duplicate
+        nodes.remove(nodes.size() - 1);
+        this.size -= 1;
+
+        // Move the new root down appropriately
+        this.moveDown(nodes.get(0));
+
+        return min;
     }
 }

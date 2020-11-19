@@ -10,6 +10,6 @@ public class Edge {
     }
 
     Node getSource () { return source; }
-    Node getDetination () { return destination; }
+    Node getDestination () { return destination; }
     int getWeight () { return weight; }
 }

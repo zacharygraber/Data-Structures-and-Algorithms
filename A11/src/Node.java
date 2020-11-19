@@ -62,7 +62,17 @@ public class Node implements Comparable<Node>, TreePrinter.PrintableNode {
      * at the end of the list.
      */
     ArrayList<Node> followPrevious () {
-        return null; // TODO
+        ArrayList<Node> result = new ArrayList<>();
+        result.add(this);
+
+        Node previous = this.previous;
+        while (previous != null) {
+            result.add(previous);
+            previous = previous.previous; // Only in Java...
+        }
+
+        Collections.reverse(result);
+        return result;
     }
 
     public int compareTo (Node other) {
