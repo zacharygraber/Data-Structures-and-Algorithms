@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -23,7 +24,7 @@ public class Node implements Comparable<Node>, TreePrinter.PrintableNode {
     private final String id;
     private boolean visited;
     private int value;
-    private Node previous;
+    private ArrayList<Node> previous;
     private Heap heap;
     private int heapIndex;
 
@@ -35,7 +36,7 @@ public class Node implements Comparable<Node>, TreePrinter.PrintableNode {
     void reset () {
         this.visited = false;
         this.value = Integer.MAX_VALUE;
-        this.previous = null;
+        this.previous = new ArrayList<>();
         this.heap = null;
         this.heapIndex = -1;
     }
@@ -50,29 +51,65 @@ public class Node implements Comparable<Node>, TreePrinter.PrintableNode {
 
     void setValue(int distance) { this.value = distance; }
 
-    void setPrevious (Node previous) { this.previous = previous; }
+    /**
+     *  Adds a node ON TOP OF the existing previous ones. This is used when a new path is discovered with equal
+     *  cost to the known minimum.
+     */
+    public void addPrevious(Node n) {
+        this.previous.add(n);
+    }
+
+    /**
+     *  Clears the previous nodes list, then adds this node into the now empty ArrayList.
+     *  This is used when a new path is discovered that is shorter than the known minimum.
+     */
+    public void replacePrevious(Node n) {
+        this.previous.clear();
+        this.previous.add(n);
+    }
 
     int getHeapIndex () { return heapIndex; }
 
     void setHeapIndex (int index) { this.heapIndex = index; }
 
     /**
-     * Follows the previous pointers from this node until we encounter a null
-     * pointer. Returns the list of nodes encountered with the current node
-     * at the end of the list.
+     *  Each Node has an ArrayList of previous Node references. You can think of these like the destination as the root of
+     *  a tree. In order to count the number of paths, we count the leaves in the tree.
      */
-    ArrayList<Node> followPrevious () {
-        ArrayList<Node> result = new ArrayList<>();
-        result.add(this);
-
-        Node previous = this.previous;
-        while (previous != null) {
-            result.add(previous);
-            previous = previous.previous; // Only in Java...
+    int countPaths (Node source) {
+        // Base case
+        if (this.equals(source)) {
+            return 1;
         }
 
-        Collections.reverse(result);
-        return result;
+        // Recursive step
+        int sum = 0;
+        for (Node previousNode : this.previous) {
+            sum += previousNode.countPaths(source);
+        }
+        return sum;
+    }
+
+    /**
+     *  Gets an ArrayList of all the different possible shortest paths, each represented as an ArrayList of Nodes
+     */
+    ArrayList<ArrayList<Node>> getAllPaths(Node source) {
+        // Base case
+        if (this.equals(source)) {
+            ArrayList<ArrayList<Node>> result = new ArrayList<>();
+            result.add(new ArrayList<>(Collections.singletonList(this)));
+            return result;
+        }
+
+        ArrayList<ArrayList<Node>> possiblePaths = new ArrayList<>(); // Start each node back up the chain with an empty list of paths
+        for (Node previous : this.previous) { // For each previous child of this Node..
+            ArrayList<ArrayList<Node>> input = previous.getAllPaths(source); // Make a recursive call on the child to get an "input", which is a list of paths
+            for (ArrayList<Node> path : input) { // For each path in the input...
+                path.add(this); // Append this node to the end
+                possiblePaths.add(path); // Add the path to be returned back up the Stack.
+            }
+        }
+        return possiblePaths;
     }
 
     public int compareTo (Node other) {
