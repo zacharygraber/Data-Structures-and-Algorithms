@@ -178,8 +178,14 @@ public class DirectedGraph {
      *
      */
     Collection<Edge> maximumFlow (Node source, Node destination) {
-        Hashtable<Edge, Edge> flow = new Hashtable<>();
         DirectedGraph residual = new DirectedGraph(this);
+        Hashtable<Edge, Edge> flow = new Hashtable<>();
+        // I'm not really sure how the flow graph is supposed to be initialized here.
+        for (ArrayList<Edge> edgeArrayList : this.neighbors.values()) {
+            for (Edge e : edgeArrayList) {
+                flow.put(e, e);
+            }
+        }
 
         while (true) {
             try {
@@ -192,6 +198,9 @@ public class DirectedGraph {
                     if (e.getWeight() < minWeight) {
                         minWeight = e.getWeight();
                     }
+                }
+                for (Edge e : shortestPath) {
+                    flow.put(e, new Edge(e.getSource(), e.getDestination(), e.getWeight() + minWeight));
                 }
             }
             catch (NoPathE noPathE) {
