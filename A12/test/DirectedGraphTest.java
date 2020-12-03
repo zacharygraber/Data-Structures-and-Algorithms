@@ -45,7 +45,7 @@ class DirectedGraphTest {
     }
 
     @Test
-    public void topologicalSort () {
+    public void topologicalSort () throws NoPathE {
         Node v1 = new Node("v1", 0);
         Node v2 = new Node("v2", 0);
         Node v3 = new Node("v3", 0);

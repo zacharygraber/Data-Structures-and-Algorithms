@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UndirectedGraphTest {
 
     @Test
-    void simpleGraph() {
+    void simpleGraph() throws NoPathE {
         int inf = Integer.MAX_VALUE;
         Node s = new Node("s", inf);
         Node a = new Node("a", inf);
@@ -38,6 +38,11 @@ class UndirectedGraphTest {
 
         Set<Edge> tree = graph.minimumSpanningTree(s);
         assertEquals(5, tree.size());
+//        // DEBUG ///////////////
+//        for (Edge e : tree) {
+//            System.out.println(e.toString());
+//        }
+//        ////////////////////////
         assertTrue(tree.contains(sa));
         assertTrue(tree.contains(ac));
         assertTrue(tree.contains(cd));

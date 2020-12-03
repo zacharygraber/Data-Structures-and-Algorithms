@@ -57,6 +57,9 @@ public class DirectedGraph {
 
         while (heap.getSize() > 0) {
             Node current = heap.extractMin();
+            if (current.getValue() == Integer.MAX_VALUE) {
+                break;
+            }
             if (current.equals(destination) && destination.getValue() != Integer.MAX_VALUE) {
                 return destination.followPreviousEdge();
             }
@@ -89,8 +92,44 @@ public class DirectedGraph {
      *   - when relaxing an edge v --> w, the value of w is reduced by 1.
      *
      */
-    public Queue<Node> topologicalSort () {
-        return null; // TODO
+    public Queue<Node> topologicalSort () throws NoPathE {
+        // Initialize all nodes to 0
+        for (Node n : nodes) n.reset(0);
+        // Loop through all edges, and increment the destination Node by 1
+        for (ArrayList<Edge> list : neighbors.values()) {
+            for (Edge e : list) {
+                // Increment the in-degree of the destination of the Edge by 1
+                e.getDestination().setValue(e.getDestination().getValue() + 1);
+            }
+        }
+
+        Heap heap = new Heap(nodes);
+        Queue<Node> q = new LinkedList<>();
+
+        while (heap.getSize() > 0) {
+            // Extract the min and make sure it is 0
+            Node current = heap.extractMin();
+            // DEBUGGING //////////////
+            System.out.println("VISITING " + current.toString());
+            for (Node n : nodes) {
+                System.out.println(n.toString() + ": " + n.getValue());
+            }
+            System.out.println("\n");
+            ///////////////////////////
+            if (current.getValue() != 0) {
+                throw new NoPathE();
+            }
+
+            if (q.contains(current)) break;
+            // Collect it into the Queue
+            q.add(current);
+
+            // Relax edges
+            for (Edge e : neighbors.get(current)) {
+                heap.update(e.getDestination(), e.getDestination().getValue() - 1);
+            }
+        }
+        return q;
     }
 
     /**

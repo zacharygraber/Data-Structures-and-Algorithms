@@ -33,8 +33,39 @@ public class UndirectedGraph {
      * in the previous pointers.
      *
      */
-    Set<Edge> minimumSpanningTree (Node source) {
-        return null; // TODO
+    Set<Edge> minimumSpanningTree (Node source) throws NoPathE {
+        for (Node n : nodes) n.reset(Integer.MAX_VALUE);
+        source.setValue(0);
+        Heap heap = new Heap(nodes);
+        assert heap.getMin().equals(source);
+
+        while (heap.getSize() > 0) {
+            Node current = heap.extractMin();
+
+            // If we encounter a Node with a value of (basically infinity), we know that there's no way to access it.
+            if (current.getValue() == Integer.MAX_VALUE) {
+                throw new NoPathE();
+            }
+            if (current.isVisited()) break;
+            current.setVisited();
+            for (Edge edge : neighbors.get(current)) {
+                if (!edge.getDestination().isVisited()) {
+                    Node neighbor = edge.getDestination();
+                    int newWeight = edge.getWeight();
+                    if (newWeight < neighbor.getValue()) {
+                        heap.update(neighbor, newWeight);
+                        neighbor.setPreviousEdge(edge);
+                    }
+                }
+            }
+        }
+        Set<Edge> result = new HashSet<>();
+        for (Node n : nodes) {
+            if (!n.equals(source)) {
+                result.add(n.getPreviousEdge());
+            }
+        }
+        return result;
     }
 
     public String toString () {
