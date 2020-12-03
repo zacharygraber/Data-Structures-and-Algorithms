@@ -178,7 +178,27 @@ public class DirectedGraph {
      *
      */
     Collection<Edge> maximumFlow (Node source, Node destination) {
-        return null; // TODO
+        Hashtable<Edge, Edge> flow = new Hashtable<>();
+        DirectedGraph residual = new DirectedGraph(this);
+
+        while (true) {
+            try {
+                ArrayList<Edge> shortestPath = residual.shortestPath(source, destination);
+                if (shortestPath.size() == 0) {
+                    break;
+                }
+                int minWeight = shortestPath.get(0).getWeight();
+                for (Edge e : shortestPath) {
+                    if (e.getWeight() < minWeight) {
+                        minWeight = e.getWeight();
+                    }
+                }
+            }
+            catch (NoPathE noPathE) {
+                break;
+            }
+        }
+        return flow.values();
     }
 
     public String toString () {
