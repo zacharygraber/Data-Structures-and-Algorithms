@@ -202,6 +202,13 @@ public class DirectedGraph {
                 for (Edge e : shortestPath) {
                     flow.put(e, new Edge(e.getSource(), e.getDestination(), e.getWeight() + minWeight));
                 }
+
+                Hashtable<Node, ArrayList<Edge>> newAdjList = new Hashtable<>();
+                for (ArrayList<Edge> edgeArrayList : this.neighbors.values()) {
+                    for (Edge e : edgeArrayList) {
+                        flow.put(e, e);
+                    }
+                }
             }
             catch (NoPathE noPathE) {
                 break;
