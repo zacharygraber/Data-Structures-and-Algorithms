@@ -39,6 +39,10 @@ public class Tile {
 
     int getCol () { return col; }
 
+    char getCharLower() {
+        return Character.toLowerCase(this.c);
+    }
+
     public String toString () {
         return String.valueOf(Character.toUpperCase(c));
     }

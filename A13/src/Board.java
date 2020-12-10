@@ -26,7 +26,28 @@ public class Board {
      * that have not been visited.
      */
     public List<Tile> getFreshNeighbors (int r, int c) {
-        return null; // TODOList<Tile> result = new ArrayList<>();
+        List<Tile> result = new ArrayList<>();
+
+        for (int newR = -1; newR < 2; newR++) {
+            if (newR == -1 && r == 0)
+                continue; // There is no top neighbor if this is the topmost row
+            if (newR == 1 && r == this.boardSize - 1)
+                continue; // There is no bottom neighbor if this is the bottom row
+            for (int newC = -1; newC < 2; newC++) {
+                if (newC == -1 && c == 0)
+                    continue; // No left neighbor if this is the leftmost column already.
+                if (newC == 1 && c == this.boardSize - 1)
+                    continue; // No right neighbor if this is the rightmost column already.
+                if (newC == 0 && newR == 0)
+                    continue; // Don't add itself to the neighbors.
+
+                Tile neighbor = this.tiles[r + newR][c + newC];
+                if (neighbor.isFresh())
+                    result.add(neighbor);
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -42,7 +63,24 @@ public class Board {
      *   - otherwise visit all fresh neighbors recursively
      */
     public HashSet<String> findWordsFromPos(int r, int c, String s) {
-        return null; // TODO
+        HashSet<String> result = new HashSet<>();
+        Tile tile = this.tiles[r][c];
+        tile.setVisited();
+        String newS = s + tile.getCharLower();
+        if (this.dict.contains(newS))
+            result.add(newS);
+        if (!this.dict.possiblePrefix(newS)) {
+            tile.reset();
+            return result;
+        }
+        else {
+            List<Tile> freshNeighbors = this.getFreshNeighbors(r, c);
+            for (Tile neighbor : freshNeighbors) {
+                result.addAll(findWordsFromPos(neighbor.getRow(), neighbor.getCol(), newS));
+            }
+        }
+        tile.reset();
+        return result;
     }
 
     public HashSet<String> findWords() {
