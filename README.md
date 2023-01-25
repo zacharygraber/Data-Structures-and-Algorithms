@@ -1,2 +1,7 @@
-# Distribution Repository for H343-FA2020
-All starter code files H343 assignments go here.
+### Honors Data Structures and Algorithms
+##### Indiana University
+##### Fall 2020
+
+---
+
+This class saw me implementing lots of data structures and algorithms, mostly in Java.
